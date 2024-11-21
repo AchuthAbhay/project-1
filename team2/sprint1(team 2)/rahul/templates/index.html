@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Product List</h1>
+    
+    <ul>
+        {% for product in products %}
+            <li>
+                <strong>{{ product.product_Name }}</strong><br>
+                {{ product.product_Description }}<br>
+                Price: ${{ product.product_Price }}<br>
+                Stock Quantity: {{ product.stock_Quatity }}<br>
+                <img src="{{product.product_Image_Url}}" alt="product image" style="width: 126px; height: 126px;">
+                <!-- Image url : {{product.product_Image_Url}} <br> -->
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <hr>
+
+    <h2>Add New Product</h2>
+    <form action="{{ url_for('add_product') }}" method="POST">
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea><br>
+        
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required><br>
+        
+        <label for="image_url">Image URL:</label>
+        <input type="text" id="image_url" name="image_url" required><br>
+        
+        <label for="stock_quantity">Stock Quantity:</label>
+        <input type="number" id="stock_quantity" name="stock_quantity" required><br>
+        
+        <button type="submit">Add Product</button>
+    </form>
+
+</body>
+</html>
