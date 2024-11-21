@@ -1,0 +1,40 @@
+.form-section {
+    background-image: url('https://gogarden.co.in/cdn/shop/files/WhatsApp_Image_2023-05-28_at_8.50.54_PM.jpg?v=1685341299');
+    background-size: cover;  
+    background-repeat: no-repeat; 
+    background-position: center; 
+    padding: 70px; 
+    border-radius: 15px;
+}
+.form-container {
+    background: rgba(255, 255, 255, 0.8); 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    width: 500px;
+
+}
+
+.carousel-inner img {
+    width: 100%;    /* Ensure the image takes up the full width */
+    height: auto;   /* Maintain aspect ratio */
+    object-fit: contain; /* Optional: Use 'contain' if you don't want cropping */
+}
+
+
+#page-header {
+    background-color: #28a745; 
+    color: white;             
+    padding: 10px 0;         
+}
+
+#page-footer {
+    background-color: #28a745; 
+    color: white;              
+    padding: 10px 0;           
+}
+
+#page-header h1,
+#page-footer p {
+    margin: 0;
+}

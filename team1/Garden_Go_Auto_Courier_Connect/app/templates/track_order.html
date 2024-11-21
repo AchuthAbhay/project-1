@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <div class="row-justify-content-center">
+            <form method="POST" action="{{ url_for('track_order') }}">
+                <h1 class="mt-5 mb-3">Track Order </h1>
+                <div class="mb-3">
+                    <label for="order_id" class="form-label">Order Id</label>
+                    <input type="text" class="form-control" id="order_id" name="order_id" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+
+                <button type="submit" class="btn btn-success">Track</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

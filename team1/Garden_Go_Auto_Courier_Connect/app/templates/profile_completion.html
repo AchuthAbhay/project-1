@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2>Complete Your Profile</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="recipient_name" class="form-label">Recipient Name</label>
+                <input type="text" class="form-control" id="recipient_name" name="recipient_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="pin" class="form-label">PIN Code</label>
+                <input type="text" class="form-control" id="pin" name="pin" required>
+            </div>
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
