@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courier Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Courier Dashboard</h1>
+
+        <!-- Hidden input to pass courier ID -->
+        <input type="hidden" id="courier-id" value="{{ courier_id }}">
+
+        <!-- Total Pending Orders -->
+        <div class="summary">
+            <h2>Total Pending Orders: <span id="total-pending">{{ orders|length }}</span></h2>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="search-pending" class="search-input" placeholder="Search by customer name..." onkeyup="filterPendingOrders()">
+        </div>
+
+        <button class="refresh-button" onclick="refreshPendingOrders()">Refresh Orders</button>
+
+        <h2>Assigned Orders</h2>
+        <table id="pending-orders-table">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Address</th>
+                    <th>Products</th>
+                    <th>Quantity</th>
+                    <th>Estimate Time</th>
+                    <th>Current Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody id="pending-orders-body">
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order['customer_name'] }}</td>
+                    <td>{{ order['customer_address'] }}</td>
+                    <td>{{ order['products']  }}</td>
+                    <td>{{ order['quantity'] }}</td>
+                    <td>{{ order['estimated_delivery'] }}</td>
+                    <td class="current-status">{{ order['status'] }}</td>
+                    <td>
+                        <form action="{{ url_for('update_order_status') }}" method="post" class="status-form">
+                            <input type="hidden" name="order_id" value="{{ order['order_id'] }}">
+                            <input type="hidden" name="courier_id" value="{{ courier_id }}">
+                            <select name="new_status" class="status-dropdown" onchange="handleStatusChange(this)">
+                                <option value="Picked Up" {% if order['status'] == 'Picked Up' %}selected{% endif %}>Picked Up</option>
+                                <option value="In Transit" {% if order['status'] == 'In Transit' %}selected{% endif %}>In Transit</option>
+                                <option value="Delivered" {% if order['status'] == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                <option value="Failed Delivery" {% if order['status'] == 'Failed Delivery' %}selected{% endif %}>Failed Delivery</option>
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
