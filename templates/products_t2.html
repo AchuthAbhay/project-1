@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Garden Go | Products</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.show_products') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.history') }}">Order History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.view_cart') }}">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.cust_profile') }}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.contact') }}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('authenticate.logout') }}">Logout</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="product-wrapper">
+    <div class="product-page">
+        <h1 class="page-title">Available Products</h1>
+
+        <!-- Flash Messages -->
+        <!-- <div id="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flash-messages">
+                {% for category, message in messages %}
+                <li class="flash-message {{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </div> -->
+
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">{{ product.name }}</h2>
+                    <p class="product-description">{{ product.description }}</p>
+                    <p class="product-price">${{ product.selling_price }}</p>
+                    <p class="product-stock">Stock: {{ product.stock_quantity }}</p>
+
+                    <!-- Display "Add to Cart" form for everyone -->
+                    <form action="{{ url_for('customer.add_to_cart', product_id=product.product_id) }}" method="POST"
+                        id="add-to-cart-form-{{ product.product_id }}">
+                        <div class="quantity-container">
+                            <label for="quantity-{{ product.id }}">Quantity:</label>
+                            <input type="number" name="quantity" id="quantity-{{ product.product_id }}" min="1"
+                                max="{{ product.stock_quantity }}" value="1" required>
+                        </div>
+                        <button type="submit" class="add-to-cart-btn" id="add-to-cart-btn-{{ product.product_id }}">Add
+                            to Cart</button>
+                    </form>
+
+                    <!-- If the user is an admin, show an alert when they click "Add to Cart" -->
+                    {% if user.is_authenticated and user.role == 'Admin' %}
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const form = document.getElementById('add-to-cart-form-{{ product.product_id }}');
+                            const submitButton = form.querySelector('button[type="submit"]');
+                            submitButton.addEventListener("click", function (event) {
+                                alert("Admins cannot add products to the cart.");
+                                event.preventDefault(); // Prevent form submission
+                            });
+                        });
+                    </script>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<script src="{{ url_for('static', filename='js/products.js') }}"></script>
+{% endblock %}

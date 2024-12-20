@@ -1,0 +1,90 @@
+.form-section {
+    background-image: url('https://gogarden.co.in/cdn/shop/files/WhatsApp_Image_2023-05-28_at_8.50.54_PM.jpg?v=1685341299');
+    background-size: cover;  
+    background-repeat: no-repeat; 
+    background-position: center; 
+    padding: 70px; 
+    border-radius: 15px;
+}
+.form-container {
+    background: rgba(255, 255, 255, 0.8); 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    width: 500px;
+
+}
+
+.carousel-inner img {
+    width: 100%;    /* Ensure the image takes up the full width */
+    height: auto;   /* Maintain aspect ratio */
+    object-fit: contain; /* Optional: Use 'contain' if you don't want cropping */
+}
+
+
+#page-header {
+    background-color: #28a745; 
+    color: white;             
+    padding: 10px 0;         
+}
+
+#page-footer {
+    background-color: #28a745; 
+    color: white;              
+    padding: 10px 0;           
+}
+
+#page-header h1,
+#page-footer p {
+    margin: 0;
+}
+
+.f_box,.profile_class {
+    border-radius: 15px; 
+    border: 2px solid #28a745;
+    padding: 20px; 
+    background-color: rgba(255, 255, 255, 0.9); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    max-width: 500px; 
+    margin: 0 auto; 
+}
+
+.category-section {
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .product-card {
+    width: 200px;
+    background-color: #737373;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .product-details-link {
+    color: #007BFF;
+    text-decoration: none;
+  }
+
+  .product-details-link:hover {
+    text-decoration: underline;
+  }
+
+

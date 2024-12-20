@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title%}
+Add Product
+{%endblock%}
+{% block content %}
+<h1>{{user.name}}'s Dashboard</h1>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('admin.admin_dashboard') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('admin.add_pro') }}">Add new product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('admin.admin_summary') }}">Summary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('authenticate.logout') }}">Logout</a>
+                    </li>
+                    
+                </ul>
+                <form class="d-flex" method="GET" role="search">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Search products" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                </div>
+        </div>
+    </nav>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="add_pro_form">
+            <center><h2>Product details</h2></center>
+            <form method="POST" action="{{ url_for('admin.add_pro') }}" >
+                <label for="name" class="form-label">Product Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+                
+            
+                <label for="description" class="form-label">Description:</label>
+                <textarea id="description" class="form-control" name="description" required></textarea>
+            
+                <label for="cost_price" class="form-label">Cost Price:</label>
+                <input type="number" class="form-control"id="cost_price" name="cost_price" step="0.01" required>
+
+                <label for="selling_price" class="form-label">Selling Price:</label>
+                <input type="number" class="form-control"id="selling_price" name="selling_price" step="0.01" required>
+            
+                <label for="quantity" class="form-label">Stock Quantity:</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" step="1" required>
+        
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" class="form-select" name="category" required>
+                    <option value="">Select a category</option>
+                  {% for category in categories %}
+                    <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+                  {% endfor %}
+                </select>
+                
+            
+                <label for="image_url" class="form-label">Product Image URL:</label>
+                <input type="text" class="form-control"id="image_url" name="image_url" required>
+            <br>
+                <input class="btn btn-primary" type="submit" value="Submit">
+        
+            </form>
+        
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{%extends 'base.html'%}
+{%block title%}
+    <title>Admin Dashboard</title>
+{%endblock%}
+
+{%block content%}
+<div class="container">
+    <h1>{{user.name}}'s Dashboard</h1>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('admin.admin_dashboard') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('admin.add_pro') }}">Add new product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('admin.admin_summary') }}">Summary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('api.analytics') }}">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('authenticate.logout') }}">Logout</a>
+                    </li>
+                    
+                </ul>
+                <form class="d-flex" method="GET" role="search">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Search products" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                </div>
+                
+        </div>
+    </nav>
+    {% for category in categories %}
+        <div class="category-section mt-4">
+            <h3>{{ category.category_name }}</h3>
+
+            <!-- Check if there are any products under this category -->
+            {% if products_by_category[category] %}
+                <div class="row">
+                    {% for product in products_by_category[category] %}
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}" height="230em">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p class="card-text">{{ product.description }}</p>
+                                    <p class="card-text"><strong>Price:</strong> ₹{{ product.selling_price }}</p>
+
+                                </div>
+                                <form action="{{ url_for('admin.delete_product') }}" method="POST" style="margin-top: 10px;">
+                                    <input type="hidden" id="product_id" name="product_id" value="{{ product.product_id }}">
+                                    <input type="hidden" id="action" name="action" value="prompt">
+                                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                        Delete Product
+                                    </button>
+                                </form>
+                                
+                                <form action="{{ url_for('admin.edit_product') }}" method="POST">
+                                    <input type="hidden" id="product_id" name="product_id" value="{{ product.product_id }}">
+                                    <input type="hidden" id="action" name="action" value="prompt">
+                                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: #ffc107; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                                      Edit Product
+                                    </button>
+                                </form>
+      
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No products available in this category.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+     
+    
+</div>
+{% endblock %}
+    

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+  <title>E-commerce Dashboard</title>
+{% endblock %}
+
+{% block extra_css %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel='stylesheet'>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    
+    <!-- Today's Metrics -->
+    <div class="metrics">
+      <div class="metric-card">
+        <h3>Total Sales</h3>
+        <h1 id="sales">loading..</h1>
+      </div>
+      <div class="metric-card">
+        <h3>Total Profit</h3>
+        <h1 id="profit">loading..</h1>
+      </div>
+      <div class="metric-card">
+        <h3>Average Sales</h3>
+        <h1 id="average">loading..</h1>
+      </div>
+    </div>
+  
+    <!-- Chart Rows -->
+    <div class="chart-container">
+      <div class="card">
+        <h3>Product Availability</h3>
+        <canvas id="productAvailability"></canvas>
+      </div>
+  
+      <div class="card">
+        <h3>Total Products Sold</h3>
+        <canvas id="totalProductsSold"></canvas>
+      </div>
+  
+      <div class="card">
+        <h3>Profit over period</h3>
+        <canvas id="profitChart"></canvas>
+      </div>
+  
+      <div class="card">
+        <h3>Sales Performance</h3>
+        <canvas id="salesPerformance"></canvas>
+      </div>
+  
+      <div class="card">
+        <h3>Top Performing Products</h3>
+        <canvas id="topPerformingProducts"></canvas>
+      </div>
+      <div class="card">
+        <div style="display: inline-block;">
+          <h3>Users Location</h3>
+          <select onchange="usersLocation(value)" style="height: 30px; width: 150px; border-radius: 3px;">
+            <option value="all">select location</option>
+            <option value="country">country</option>
+            <option value="region">region</option>
+          </select>
+        </div>
+        <canvas id="userslocation"></canvas>
+  
+      </div>
+      <div class="card">
+        <h3>Trending Products</h3>
+        <select onchange="trendingProducts(value)" style="height: 30px; width: 150px; border-radius: 3px;">
+          <option value="all">select season</option>
+          <option value="spring">spring</option>
+          <option value="summer">summer</option>
+          <option value="autumn">autumn</option>
+          <option value="winter">winter</option>
+        </select>
+        <canvas id="trendingproducts"></canvas>
+      </div>
+  
+  
+    <!-- Delivery Performance Pie Chart -->
+    <div class="card">
+      <h3>Repeat Customer Rate</h3>
+      <h4 style="margin:0 0 0 10px " id="repeat_customer_rate">loading..</h4>
+      <h3 style="margin:10px 0 0 0 ">Customers Over Time</h3>
+      <canvas id="repeat"></canvas>
+    </div>
+  
+    <!-- New Line Chart for Repeat and New Customer Rates -->
+    <div class="card">
+      <h3>delivery performance</h3>
+      <canvas id="deliveryperformance"></canvas>
+    </div>
+  </div>
+
+  
+{% endblock %}

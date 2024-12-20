@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Order History</title>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/order_history.css') }}">
+{% endblock %}
+    
+{% block content %}
+      <h1>Hello, {{ customer_name }}</h1>
+      <h1>Your Orders</h1>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="search-history"
+          class="search-input"
+          placeholder="Search by Order Items or Address..."
+          onkeyup="filterHistory()"
+        />
+      </div>
+
+      <table id="status-history-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Order Items</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Estimated Delivery Time</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody id="status-history-body">
+          {% for order in orders %}
+          <tr>
+            <td>{{ order['order_id'] }}</td>
+            <td>{{ order['order_items'] }}</td>
+            <td>{{ order['quantity'] }}</td>
+            <td>{{ order['price'] }}</td>
+            <td>
+              <a
+                href='/{{ order["order_id"] }}/status'
+                target="_blank"
+              >
+                {{ order['status'] }}
+              </a>
+            </td>
+            <td>{{ order['estimated_delivery'] }}</td>
+            <td>{{ order['customer_address'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/order_history.js', customer_id=customer_id) }}"></script>
+
+{% endblock %}

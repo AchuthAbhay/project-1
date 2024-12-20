@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Courier Profile</title>
+{%endblock%}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="profile_class">
+            <center><h2>Complete Your Profile</h2></center>
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone_no" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="phone_no" name="phone_no" required>
+                </div>
+                <div class="mb-3">
+                    <label for="vehicle_info" class="form-label">Vehicle Information</label>
+                    <input type="text" class="form-control" id="vehicle_info" name="vehicle_info" required>
+                </div>
+                <div class="mb-3">
+                    <label for="vehicle_no" class="form-label">Vehicle Number</label>
+                    <input type="text" class="form-control" id="vehicle_no" name="vehicle_no" required>
+                </div>
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

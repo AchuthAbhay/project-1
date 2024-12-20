@@ -1,0 +1,81 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9fafb;
+    background-image: url('images/logistics.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Timeline Styling */
+.timeline {
+    position: relative;
+    margin-left: 50px;
+    padding-left: 20px;
+}
+
+.status-step {
+    position: relative;
+    margin-bottom: 60px;
+}
+
+.dot {
+    width: 18px;
+    height: 18px;
+    background: #ccc;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    position: absolute;
+    left: -35px;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.dot.completed {
+    background: #4caf50;
+}
+
+.status-info {
+    margin-left: 10px;
+}
+
+.date-time {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-size: 20px;
+    margin: 0 0 5px;
+    color: #333;
+}
+
+p {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+}
+
+

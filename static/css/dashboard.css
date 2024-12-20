@@ -1,0 +1,200 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #1e1c2a;
+    margin: 0;
+    padding: 0;
+    background-image: url("assets/background.jpg");
+    background-size: cover;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    /* Prevents horizontal scrolling */
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Slight transparency */
+    border-bottom: 5px solid #b3d146;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.header h1 {
+    color: #1e5128;
+    font-size: 28px;
+    margin: 8px;
+}
+
+/* Navigation styling */
+.header nav {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    /* Allows buttons to wrap into the next line if needed */
+    justify-content: flex-end;
+    /* Keeps the buttons aligned to the right */
+    max-width: 100%;
+}
+
+.header nav a,
+.header nav button {
+    color: #1e1c2a;
+    text-decoration: none;
+    font-weight: bold;
+    white-space: nowrap;
+    padding: 8px 12px;
+}
+
+.header nav button {
+    min-width: 100px;
+    background-color: #b3d146;
+    /* Matches footer background color */
+    color: #1e5128;
+    /* Matches footer text color */
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.header nav button:hover {
+    background-color: #a2bf3d;
+    /* Slightly darker shade on hover */
+}
+
+.label {
+    text-align: center;
+    padding-top: 130px;
+    /* Moves the heading lower for better positioning */
+    padding-bottom: 20px;
+    /* Adds a bit more space below heading */
+}
+
+.label h2 {
+    padding: 5px;
+    margin: 0;
+    color: #b3d146;
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow: 1px 1px 4px #1e5128;
+}
+
+.label button,
+.label select {
+    padding: 12px;
+    margin: 0 5px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background: black;
+    color: white;
+}
+
+/* Metrics section */
+.metrics {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px auto;
+    margin-top: 50px;
+    padding: 15px 0;
+    max-width: 1200px;
+    gap: 15px;
+}
+
+.metric-card {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.85);
+    color: #1e1c2a;
+    border-radius: 8px;
+    /* padding: 20px; */
+    flex: 1 1 250px;
+    /* Ensures responsive width */
+    margin: 10px;
+    border: 2px solid #b3d146;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.metric-card:hover {
+    transform: scale(1.05);
+}
+
+.chart-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 95vw;
+    margin: 20px auto;
+    padding-bottom: 80px;
+    /* Increased padding for more space above the footer */
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    color: #1e1c2a;
+    border-radius: 8px;
+    padding: 20px;
+    border: 2px solid #b3d146;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card canvas {
+    max-width: 100%;
+    height: 250px;
+    /* Responsive height to prevent overflow */
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+@media (min-width: 768px) {
+    .chart-container {
+        grid-template-columns: repeat(2, 1fr);
+        /* Two columns on larger screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .header nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header nav a,
+    .header nav button {
+        width: 100%;
+        /* Full-width buttons on small screens */
+    }
+
+    .metrics {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    background-color: #b3d146;
+    color: #1e5128;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    p{
+        margin: 5px;
+    }
+}
+

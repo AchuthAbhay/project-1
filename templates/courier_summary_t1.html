@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Courier Summary</title>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/courier.css') }}">
+{% endblock %}
+
+{%block content%}
+    <h1>{{user_name}}'s Summary</h1>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('courier.courier_dashboard') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('courier.courier_summary') }}">Summary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('courier.courier_profile') }}">Profile </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('authenticate.logout') }}">Logout</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="summary">
+        <h2>Total Delivered Orders: <span id="total-delivered">{{ orders|length }}</span></h2>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" id="search-delivered" class="search-input" placeholder="Search by customer name..." onkeyup="filterDeliveredOrders()">
+    </div>
+
+    <h2>Delivered Orders</h2>
+    <table id="Delivered-orders-table">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Customer Name</th>
+                <th>Address</th>
+                <th>Products</th>
+                <th>Quantity</th>
+                <th>Delivered at</th>
+            </tr>
+        </thead>
+        <tbody id="delivered-orders-body">
+            {% for order in orders %}
+            <tr>  
+                <td>{{ order['order_id'] }}</td>
+                <td>{{ order['customer_name'] }}</td>
+                <td>{{ order['customer_address'] }}</td>
+                <td>{{ order['products']  }}</td>
+                <td>{{ order['quantity'] }}</td>
+                <td>{{ order['delivered_at'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script src="{{ url_for('static', filename='js/courier.js') }}"></script>
+{% endblock %}
+    

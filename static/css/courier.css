@@ -1,0 +1,107 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('images/logistics.png');
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    /* padding: 20px; */
+}
+
+.container h1,.container h2 {
+    text-align: center;
+    color: #333;
+}
+
+.container {
+    max-width: 95%;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.status-dropdown {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+}
+
+.summary {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.search-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.search-input {
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.refresh-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.refresh-button:hover {
+    background-color: #45a049;
+}
+
+button:focus, input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+input[type="text"] {
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+table td select {
+    font-size: 1em;
+}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Order Summary</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/order_summary.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.show_products') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.history') }}">Order History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.view_cart') }}">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.cust_profile') }}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('customer.contact') }}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('authenticate.logout') }}">Logout</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="wrapper-order-container">
+<div class="order-container">
+    <h1>Order Summary</h1>
+    <div class="order-details">
+        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+        <p><strong>Order Date:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+        <p><strong>Total Price:</strong> ${{ "%.2f" | format(order.total_price) }}</p>
+    </div>
+
+    <table class="order-items">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.order_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>${{ "%.2f" | format(item.product.selling_price) }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ "%.2f" | format(item.quantity * item.product.selling_price) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('customer.show_products') }}" class="btn">Continue Shopping</a>
+</div>
+</div>
+{% endblock %}

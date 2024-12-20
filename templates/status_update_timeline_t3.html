@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Status Update Timeline</title>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/status_update_timeline.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Delivery Status Update</h1>
+
+    <div class="timeline">
+        {% for status in history %}
+        <div class="status-step">
+            {% if not loop.first %}
+            <div class="tube"></div>
+            {% endif %}
+            <div class="dot {% if loop.last %}completed{% endif %}"></div>
+            <div class="status-info">
+                <p class="date-time">{{ status['updated_at'] }}</p>
+                {% if status['status'] is not none %}
+                    <h3>{{ status['status'] }}</h3>
+                {% endif %}
+                <p>{{ status['reason'] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

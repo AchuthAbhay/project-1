@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Courier Dashboard</title>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/courier.css') }}">
+{% endblock %}
+
+{% block content %}
+
+        <h1>Courier Dashboard</h1>
+
+        <!-- Hidden input to pass courier ID -->
+        <input type="hidden" id="courier-id" value="{{ courier_id }}">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+            
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('courier.courier_dashboard') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for('courier.courier_summary') }}">Summary</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for('courier.courier_profile') }}">Profile </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for('authenticate.logout') }}">Logout</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Total Pending Orders -->
+        <div class="summary">
+            <h2>Total Pending Orders: <span id="total-pending">{{ orders|length }}</span></h2>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="search-pending" class="search-input" placeholder="Search by customer name..." onkeyup="filterPendingOrders()">
+        </div>
+
+        <button class="refresh-button" onclick="refreshPendingOrders()">Refresh Orders</button>
+
+        <h2>Assigned Orders</h2>
+        <table id="pending-orders-table">
+            <thead>
+                <tr>
+                    <th>Order Id</th>
+                    <th>Customer Name</th>
+                    <th>Address</th>
+                    <th>Products</th>
+                    <th>Quantity</th>
+                    <th>Estimate Time</th>
+                    <th>Current Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody id="pending-orders-body">
+                {% for order in orders %}
+                <tr>  
+                    <td>{{ order['order_id'] }}</td>
+                    <td>{{ order['customer_name'] }}</td>
+                    <td>{{ order['customer_address'] }}</td>
+                    <td>{{ order['products']  }}</td>
+                    <td>{{ order['quantity'] }}</td>
+                    <td>{{ order['estimated_delivery'] }}</td>
+                    <td class="current-status">{{ order['status'] }}</td>
+                    <td>
+                        <form action="{{ url_for('courier.update_order_status') }}" method="post" class="status-form">
+                            <input type="hidden" name="order_id" value="{{ order['order_id'] }}">
+                            <input type="hidden" name="courier_id" value="{{ courier_id }}">
+                            <select name="new_status" class="status-dropdown" onchange="handleStatusChange(this)">
+                                <option value="Processing" {% if order['status'] == 'Processing' %}selected{% endif %}>Processing</option>
+                                <option value="Picked Up" {% if order['status'] == 'Picked Up' %}selected{% endif %}>Picked Up</option>
+                                <option value="In Transit" {% if order['status'] == 'In Transit' %}selected{% endif %}>In Transit</option>
+                                <option value="Out For Delivery" {% if order['status'] == 'Out For Delivery' %}selected{% endif %}>Out For Deivery</option>
+                                <option value="Delivered" {% if order['status'] == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                <option value="Failed Delivery" {% if order['status'] == 'Failed Delivery' %}selected{% endif %}>Failed Delivery</option>
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+
+    <script src="{{ url_for('static', filename='js/courier.js') }}"></script>
+{% endblock %}
