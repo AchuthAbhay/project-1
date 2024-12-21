@@ -28,7 +28,7 @@ analytics_bp = Blueprint('api', __name__)
 
 # Route to render the dashboard HTML template
 @analytics_bp.route('/analytics')
-@login_required
+
 def analytics():
     return render_template('dashboard.html')
 
