@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, jsonify, request, current_app
-from sqlalchemy.orm import scoped_session, sessionmaker
 from flask_login import login_required
 from analyticsQuery import (
     get_total_sales,
@@ -16,7 +15,7 @@ from analyticsQuery import (
     get_monthly_customer_counts,
     get_delivery_performance
 )
-from models import create_database
+
 from app import db, create_app
 
 
@@ -28,7 +27,7 @@ analytics_bp = Blueprint('api', __name__)
 
 # Route to render the dashboard HTML template
 @analytics_bp.route('/analytics')
-
+@login_required
 def analytics():
     return render_template('dashboard.html')
 

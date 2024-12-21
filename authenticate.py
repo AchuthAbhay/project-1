@@ -1,9 +1,9 @@
 from datetime import datetime, timezone
-from flask import Blueprint, flash, jsonify, make_response, redirect, render_template, request, send_from_directory, url_for
+from flask import Blueprint, current_app, flash, make_response, redirect, render_template, request, url_for
 from flask_mail import Message
 from models import User
 from flask_login import login_user, login_required, logout_user, current_user
-from app import bcrypt, login_manager, mail, serializer, db
+from app import bcrypt, mail, db
 
 
 app = Blueprint("authenticate",__name__)
@@ -102,18 +102,22 @@ def forget_password():
             flash("Email not found. Enter registered email")
             return redirect(url_for('authenticate.forget_password'))
         
+        serializer = current_app.serializer
         token = serializer.dumps(email, salt='password-reset')
-        reset_url = url_for('reset_password', token=token, _external=True)
-        msg = Message('Password Reset Request', sender=app.config['MAIL_USERNAME'], recipients=[email])
+        reset_url = url_for('authenticate.reset_password', token=token, _external=True)
+        print(current_app.config['MAIL_USERNAME'])
+        print(current_app.config['MAIL_PASSWORD'])
+        msg = Message('Password Reset Request', sender=current_app.config['MAIL_USERNAME'], recipients=[email])
         msg.body = f'Click the link to reset your password: {reset_url}'
         mail.send(msg)
         flash('A password reset link has been sent to your email.', 'info')
-        return redirect(url_for('login'))
+        return redirect(url_for('authenticate.auth'))
     return render_template('forget_password_t1.html')
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     try:
+        serializer = current_app.serializer
         email = serializer.loads(token, salt='password-reset', max_age=3600)
     except Exception:
         flash('The reset link is invalid or has expired.', 'danger')
@@ -126,7 +130,7 @@ def reset_password(token):
             user.password_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
             db.session.commit()
             flash('Your password has been reset successfully!', 'success')
-            return redirect(url_for('authenticate.login'))
+            return redirect(url_for('authenticate.auth'))
 
     return render_template('reset_password_t1.html', token=token)
 

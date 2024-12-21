@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title%}
-Add Product
+<title>Add Product</title>
 {%endblock%}
 {% block content %}
 <h1>{{user.name}}'s Dashboard</h1>
@@ -17,25 +17,21 @@ Add Product
                         <a class="nav-link active" href="{{ url_for('admin.add_pro') }}">Add new product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('admin.admin_summary') }}">Summary</a>
+                        <a class="nav-link active" href="{{ url_for('api.analytics') }}">Summary</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ url_for('authenticate.logout') }}">Logout</a>
                     </li>
                     
                 </ul>
-                <form class="d-flex" method="GET" role="search">
-                    <input class="form-control me-2" type="search" name="query" placeholder="Search products" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                </div>
+            </div>
         </div>
     </nav>
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="add_pro_form">
             <center><h2>Product details</h2></center>
-            <form method="POST" action="{{ url_for('admin.add_pro') }}" >
+            <form method="POST" action="{{ url_for('admin.add_pro') }}" enctype="multipart/form-data">
                 <label for="name" class="form-label">Product Name:</label>
                 <input type="text" class="form-control" id="name" name="name" required>
                 
@@ -51,6 +47,9 @@ Add Product
             
                 <label for="quantity" class="form-label">Stock Quantity:</label>
                 <input type="number" class="form-control" id="quantity" name="quantity" step="1" required>
+
+                <label for="weight" class="form-label">Product Weight:</label>
+                <input type="number" class="form-control" id="weight" name="weight" step="0.1" required>
         
                 <label for="category" class="form-label">Category:</label>
                 <select id="category" class="form-select" name="category" required>
@@ -60,9 +59,23 @@ Add Product
                   {% endfor %}
                 </select>
                 
+                <label for="image_option" class="form-label">Image Option:</label>
+                <select id="image_option" class="form-select" name="image_option" onchange="toggleImageInput()" required>
+                    <option value="">Select an image option</option>
+                    <option value="url">URL</option>
+                    <option value="file">File Upload</option>
+                </select>
+
+                <div id="image_url_div" style="display: none;">
+                    <label for="image_url" class="form-label">Product Image URL:</label>
+                    <input type="text" class="form-control" id="image_url" name="image_url">
+                </div>
+
+                <div id="image_file_div" style="display: none;">
+                    <label for="image_file" class="form-label">Upload Product Image:</label>
+                    <input type="file" class="form-control" id="image_file" name="image_file" accept="image/*">
+                </div>
             
-                <label for="image_url" class="form-label">Product Image URL:</label>
-                <input type="text" class="form-control"id="image_url" name="image_url" required>
             <br>
                 <input class="btn btn-primary" type="submit" value="Submit">
         
@@ -71,4 +84,20 @@ Add Product
         </div>
     </div>
 </div>
+
+<script>
+    function toggleImageInput() {
+      var imageOption = document.getElementById('image_option').value;
+      if (imageOption === 'url') {
+        document.getElementById('image_url_div').style.display = 'block';
+        document.getElementById('image_file_div').style.display = 'none';
+      } else if (imageOption === 'file') {
+        document.getElementById('image_url_div').style.display = 'none';
+        document.getElementById('image_file_div').style.display = 'block';
+      } else {
+        document.getElementById('image_url_div').style.display = 'none';
+        document.getElementById('image_file_div').style.display = 'none';
+      }
+    }
+</script>
 {% endblock %}

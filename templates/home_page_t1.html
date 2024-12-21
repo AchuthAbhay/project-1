@@ -13,7 +13,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('authenticate.auth') }}">Login/Register</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('customer.history') }}">Track Orders</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('customer.show_catalog') }}">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('customer.contact') }}">Contact</a></li>
             </ul>
@@ -87,41 +86,41 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
-                    <img src="https://via.placeholder.com/300x300.png?text=Product+1" class="card-img-top" alt="...">
+                    <img src="{{ url_for('static', filename='images/bonsai_plant.jpeg')}}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$19.99</p>
-                        <a href="#" class="btn btn-success">Add to Cart</a>
+                        <h5 class="card-title">Bonsai Plants</h5>
+                        <p class="card-text">₹19.99</p>
+                        <a href="#" class="btn btn-success">Explore</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card">
-                    <img src="https://via.placeholder.com/300x300.png?text=Product+2" class="card-img-top" alt="...">
+                    <img src="{{ url_for('static', filename='images/snake_plant.jpeg') }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Product 2</h5>
-                        <p class="card-text">$29.99</p>
-                        <a href="#" class="btn btn-success">Add to Cart</a>
+                        <h5 class="card-title">Snake Plant</h5>
+                        <p class="card-text">₹29.99</p>
+                        <a href="#" class="btn btn-success">Explore</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card">
-                    <img src="https://via.placeholder.com/300x300.png?text=Product+3" class="card-img-top" alt="...">
+                    <img src="{{ url_for('static', filename='images/moringa_seed.jpeg') }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Product 3</h5>
-                        <p class="card-text">$39.99</p>
-                        <a href="#" class="btn btn-success">Add to Cart</a>
+                        <h5 class="card-title">Moringa Seeds</h5>
+                        <p class="card-text">₹39.99</p>
+                        <a href="#" class="btn btn-success">Explore</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card">
-                    <img src="https://via.placeholder.com/300x300.png?text=Product+4" class="card-img-top" alt="...">
+                    <img src="{{ url_for('static', filename='images/Tulip-buds.png')}}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Product 4</h5>
-                        <p class="card-text">$49.99</p>
-                        <a href="#" class="btn btn-success">Add to Cart</a>
+                        <h5 class="card-title">Tulip Buds</h5>
+                        <p class="card-text">₹49.99</p>
+                        <a href="#" class="btn btn-success">Explore</a>
                     </div>
                 </div>
             </div>

@@ -1,15 +1,10 @@
 from datetime import datetime, timezone
-# from app import db, bcrypt
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine
-
-
 db = SQLAlchemy()
 bcrypt = Bcrypt()
-Base = declarative_base()
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -88,6 +83,7 @@ class Product(db.Model):
     stock_quantity = db.Column(db.Integer, nullable=False)
     image_url = db.Column(db.String)
     category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'))
+    product_weight = db.Column(db.Float, default=0)
 
     category = db.relationship("Category", back_populates="products")
     cart_items = db.relationship("CartItem", back_populates="product")
@@ -152,12 +148,3 @@ class Subscription(db.Model):
     p256dh = db.Column(db.String, nullable=False)
 
     user = db.relationship("User", back_populates="subscriptions")
-
-def create_database():
-    database_url = "sqlite:///traildb.db"
-    engine = create_engine(database_url, echo=True)
-    Base.metadata.create_all(engine)
-    return engine
-
-if __name__ == "__main__":
-    create_database()

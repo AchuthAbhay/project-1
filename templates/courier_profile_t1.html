@@ -10,19 +10,19 @@
             <form method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}"  required>
                 </div>
                 <div class="mb-3">
                     <label for="phone_no" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="phone_no" name="phone_no" required>
+                    <input type="text" class="form-control" id="phone_no" name="phone_no" value="{{ user.phone_number }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="vehicle_info" class="form-label">Vehicle Information</label>
-                    <input type="text" class="form-control" id="vehicle_info" name="vehicle_info" required>
+                    <input type="text" class="form-control" id="vehicle_info" name="vehicle_info" value="{{ user.vehicle_info }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="vehicle_no" class="form-label">Vehicle Number</label>
-                    <input type="text" class="form-control" id="vehicle_no" name="vehicle_no" required>
+                    <input type="text" class="form-control" id="vehicle_no" name="vehicle_no" value="{{ user.vehicle_number }}" required>
                 </div>
                 <button type="submit" class="btn btn-dark">Submit</button>
             </form>

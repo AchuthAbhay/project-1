@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from flask import Blueprint, flash, json, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from app import db
-from models import Order, Audit, User, OrderItem, Subscription, Product
+from models import Order, Audit, User, OrderItem, Subscription
 from pywebpush import webpush, WebPushException
 
 app = Blueprint("courier", __name__)
@@ -21,8 +21,8 @@ def courier_dashboard():
         'customer_name': User.query.get(order.user_id).name,
         'customer_address': order.address+', '+str(order.pincode),
         'customer_phone': User.query.get(order.user_id).phone_number,
-        'products': '\n'.join([item.product.name for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()]),
-        'quantity': '\n'.join([str(item.quantity) for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()]),
+        'products': [item.product.name for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()],
+        'quantity': [str(item.quantity) for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()],
         'status': order.status,
         'estimated_delivery':order.estimated_delivery.strftime('%Y-%m-%d %H:%M:%S'),
         'created_at': order.created_at,
@@ -58,15 +58,14 @@ def update_order_status():
 
     subscriptions = Subscription.query.filter_by(user_id=order.user_id).all()
     for sub in subscriptions:
-        if sub.user_id == order.user_id:
-            send_push_notification(
-                sub.endpoint,
-                sub.p256dh,
-                sub.auth,
-                {'title':'Order Status Update',
-                'body':f"Your order {order_id} status has been updated to {new_status}.",
-                'url':f"/{order_id}/status"}
-            )
+        send_push_notification(
+            sub.endpoint,
+            sub.p256dh,
+            sub.auth,
+            {'title':'Order Status Update',
+            'body':f"Your order {order_id} status has been updated to {new_status}.",
+            'url':f"/{order_id}/status"}
+        )
 
     return redirect(url_for('courier.courier_dashboard'))
 

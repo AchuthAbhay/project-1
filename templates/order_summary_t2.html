@@ -46,7 +46,7 @@
         <p><strong>Order ID:</strong> {{ order.order_id }}</p>
         <p><strong>Order Date:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
         <p><strong>Status:</strong> {{ order.status }}</p>
-        <p><strong>Total Price:</strong> ${{ "%.2f" | format(order.total_price) }}</p>
+        <p><strong>Total Price:</strong> ₹{{ "%.2f" | format(order.total_price) }}</p>
     </div>
 
     <table class="order-items">
@@ -62,9 +62,9 @@
             {% for item in order.order_items %}
             <tr>
                 <td>{{ item.product.name }}</td>
-                <td>${{ "%.2f" | format(item.product.selling_price) }}</td>
+                <td>₹{{ "%.2f" | format(item.product.selling_price) }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>${{ "%.2f" | format(item.quantity * item.product.selling_price) }}</td>
+                <td>₹{{ "%.2f" | format(item.quantity * item.product.selling_price) }}</td>
             </tr>
             {% endfor %}
         </tbody>

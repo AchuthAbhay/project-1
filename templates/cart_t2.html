@@ -40,53 +40,125 @@
     </div>
 </nav>
 
-<div class="wraper-cart-container">
-<div class="cart-container">
-    <h1>Your Shopping Cart</h1>
-
-    {% if cart_items %}
-    <table class="cart-table">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in cart_items %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td>${{ "%.2f" | format(item.product.selling_price) }}</td>
-                <td>
-                    <form method="POST" action="{{ url_for('customer.update_cart', item_id=item.cart_item_id) }}">
-                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
-                </td>
-                <td>${{ "%.2f" | format(item.quantity * item.product.selling_price) }}</td>
-                <td>
-                    <form method="POST" action="{{ url_for('customer.remove_from_cart', item_id=item.cart_item_id) }}">
-                        <button type="submit" class="btn btn-danger">Remove</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="cart-summary">
-        <h3>Total Price: ${{ "%.2f" | format(total_price) }}</h3>
-        <form action="{{ url_for('customer.checkout') }}" method="POST">
-            <button type="submit" class="btn btn-success">Proceed to Checkout</button>
-        </form>
+<div class="wrapper-cart-container">
+    <div class="cart-container">
+      <h1 class="cart-header">Your Shopping Cart</h1>
+  
+      <div class="cart-main">
+        <!-- Left Section: Cart Items -->
+        <div class="cart-left">
+          {% if cart_items %} {% for item in cart_items %}
+          <div class="cart-items">
+            <!-- Product Image -->
+            <a
+              href="{{ url_for('customer.product_details', product_id=item.product.product_id) }}"
+            >
+              <img
+                src="{{ item.product.image_url }}"
+                alt="{{ item.product.name }}"
+                class="cart-item-image"
+              />
+            </a>
+            <!-- Product Details -->
+            <div class="cart-item-details">
+              <a
+                href="{{ url_for('customer.product_details', product_id=item.product.product_id) }}"
+              >
+                <h5>{{ item.product.name }}</h5>
+              </a>
+              <!-- Quantity Control -->
+              <div class="quantity-control">
+                <button
+                  type="button"
+                  class="btn-decrement"
+                  onclick="updateQuantity('{{ item.cart_item_id }}', -1)"
+                >
+                  &minus;
+                </button>
+  
+                <input
+                  type="text"
+                  id="quantity-{{ item.cart_item_id }}"
+                  value="{{ item.quantity }}"
+                  min="1"
+                  max="10"
+                  readonly
+                />
+  
+                <button
+                  type="button"
+                  class="btn-increment"
+                  onclick="updateQuantity('{{ item.cart_item_id }}', 1)"
+                >
+                  &plus;
+                </button>
+              </div>
+  
+              <h4
+                id="price-{{ item.cart_item_id }}"
+                class="cart-item-price"
+                data-price-per-item="{{ item.product.selling_price }}"
+              >
+                ₹{{ "%.2f" | format(item.quantity * item.product.selling_price) }}
+              </h4>
+  
+              <div class="remove-btn">
+                <form
+                  method="POST"
+                  action="{{ url_for('customer.remove_from_cart', item_id=item.cart_item_id) }}"
+                >
+                  <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %} {% else %}
+          <p>
+            Your cart is empty.
+            <a href="{{ url_for('customer.show_products') }}">Continue shopping</a>.
+          </p>
+          {% endif %}
+        </div>
+  
+        <!-- Right Section: Payment Summary -->
+        <div class="cart-right">
+          <div class="order-summary-card">
+            <h3>Order Summary</h3>
+            <div class="order-summary-address">
+              <p><strong>Shipping Address:</strong></p>
+              <p>{{ user.country }}, {{ user.address }}, {{ user.pincode }}</p>
+              <a href="{{ url_for('customer.cust_profile') }}" class="change-address-link"
+                >Change Address</a
+              >
+            </div>
+            <div class="order-summary-details">
+              <p>Subtotal: <span>₹{{ "%.2f" | format(total_price) }}</span></p>
+              <p>
+                Shipping Cost: <span>₹{{ "%.2f" | format(shipping_cost) }}</span>
+              </p>
+              <p>
+                Total Weight: <span>{{ "%.2f" | format(total_weight) }} kg</span>
+              </p>
+            </div>
+            <div class="order-summary-total">
+              <h4>
+                Total:
+                <span>₹{{ "%.2f" | format(total_price_with_shipping) }}</span>
+              </h4>
+            </div>
+            <form action="{{ url_for('customer.checkout') }}" method="POST">
+              <button type="submit" class="btn btn-success">Confirm Order</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-    {% else %}
-    <p>Your cart is empty. <a href="{{ url_for('customer.show_products') }}">Continue shopping.</a></p>
-    {% endif %}
-</div>
-</div>
-{% endblock %}
+  </div>
+  <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/styles.js') }}"></script>
+<script>
+  const flashed_messages =get_flashed_messages(with_categories=true) | tojson | safe;
+</script>
+  {% endblock %} 
 

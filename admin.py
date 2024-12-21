@@ -1,4 +1,5 @@
-from flask import Blueprint, flash, jsonify, redirect, render_template, request, send_from_directory, url_for
+import os
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from app import db
 from models import Product,Category
 from flask_login import current_user, login_required
@@ -12,16 +13,24 @@ def admin_dashboard():
     categories = db.session.query(Category).all()
     products_by_category = {}
 
+    search_query = request.args.get('search')
+
+    products_query = Product.query
+
+    if search_query:
+        products_query = products_query.filter(
+            Product.name.ilike(f"%{search_query}%") |
+            Product.description.ilike(f"%{search_query}%")
+        )
+
+    products = products_query.all()
+    
+
     for category in categories:
-        products_by_category[category] = db.session.query(Product).filter_by(category_id=category.category_id).all()
+        products_by_category[category] = [product for product in products if product.category_id == category.category_id]
 
     return render_template('admin_dashboard_t1.html', user=current_user,categories=categories, products_by_category=products_by_category)
 
-
-@app.route('/admin_summary')
-@login_required
-def admin_summary():
-    return render_template('admin_summary_t1.html', user=current_user)
 
 
 @app.route('/add_pro', methods=['GET', 'POST'])
@@ -32,9 +41,25 @@ def add_pro():
         product_category = request.form['category']
         cost_price = request.form['cost_price']
         selling_price = request.form['selling_price']
-        product_image = request.form['image_url']
         stock_quantity = request.form['quantity']
         product_description = request.form['description']
+        product_weight = request.form['weight']
+
+        image_option = request.form.get('image_option')
+        image_url = None
+
+        if image_option == 'url':
+            image_url = request.form['image_url']
+        elif image_option == 'file' and 'image_file' in request.files:
+            image_file = request.files['image_file']
+            image_path = os.path.join('static/uploads', image_file.filename)
+            image_file.save(image_path)
+            print(image_path)
+            image_url = image_path
+            print(image_url)
+        else:
+            flash('Error while uploading image','error')
+            return redirect(url_for('admin.add_pro'))
         
         new_product = Product(
             name=product_name,
@@ -42,8 +67,9 @@ def add_pro():
             cost_price=cost_price,
             selling_price=selling_price,
             stock_quantity=stock_quantity,
-            image_url=product_image,
-            description=product_description
+            image_url=image_url,
+            description=product_description,
+            product_weight = product_weight
         )
         
         db.session.add(new_product)
@@ -69,7 +95,18 @@ def edit_product():
         product.selling_price = request.form.get('selling_price')
         product.quantity = request.form.get('quantity')
         product.category_id = request.form.get('category')
-        product.image_url = request.form.get('image_url')
+        product.product_weight = request.form.get('weight')
+
+        image_option = request.form.get('image_option')
+        if image_option == 'url':
+            product.image_url = request.form['image_url']
+        elif image_option == 'file' and 'image_file' in request.files:
+            image_file = request.files['image_file']
+            if image_file.filename != '':
+                image_path = os.path.join('static/uploads', image_file.filename)
+                image_file.save(image_path)
+                product.image_url = image_path
+
         db.session.commit()
         return redirect(url_for('admin.admin_dashboard'))
 

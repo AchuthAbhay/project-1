@@ -40,9 +40,32 @@
     </div>
 </nav>
 
+<div class="search-filter-bar">
+    <form method="GET" action="{{ url_for('customer.show_products') }}" class="filter-form">
+        <input type="text" name="search" placeholder="Search by product name" value="{{ request.args.get('search', '') }}" class="search-input">
+        
+        <select name="category" class="filter-dropdown">
+            <option value="">All Categories</option>
+            {% for category in categories %}
+            <option value="{{ category[0] }}" {% if request.args.get('category') == category[0] %}selected{% endif %}>
+                {{ category[0] }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <select name="sort" class="sort-dropdown">
+            <option value="name" {% if request.args.get('sort') == 'name' %}selected{% endif %}>Sort by Name</option>
+            <option value="price" {% if request.args.get('sort') == 'price' %}selected{% endif %}>Sort by Price</option>
+            <option value="weight" {% if request.args.get('sort') == 'weight' %}selected{% endif %}>Sort by Weight</option>
+        </select>
+
+        <button type="submit" class="filter-btn">Apply</button>
+    </form>
+</div>
+
 <div class="product-wrapper">
     <div class="product-page">
-        <h1 class="page-title">Available Products</h1>
+        <h1 class="page-title">Explore our Products</h1>
 
         <!-- Flash Messages -->
         <!-- <div id="flash-messages">
@@ -56,48 +79,8 @@
             {% endif %}
             {% endwith %}
         </div> -->
-
-        <div class="product-grid">
-            {% for product in products %}
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
-                </div>
-                <div class="product-info">
-                    <h2 class="product-name">{{ product.name }}</h2>
-                    <p class="product-description">{{ product.description }}</p>
-                    <p class="product-price">${{ product.selling_price }}</p>
-                    <p class="product-stock">Stock: {{ product.stock_quantity }}</p>
-
-                    <!-- Display "Add to Cart" form for everyone -->
-                    <form action="{{ url_for('customer.add_to_cart', product_id=product.product_id) }}" method="POST"
-                        id="add-to-cart-form-{{ product.product_id }}">
-                        <div class="quantity-container">
-                            <label for="quantity-{{ product.id }}">Quantity:</label>
-                            <input type="number" name="quantity" id="quantity-{{ product.product_id }}" min="1"
-                                max="{{ product.stock_quantity }}" value="1" required>
-                        </div>
-                        <button type="submit" class="add-to-cart-btn" id="add-to-cart-btn-{{ product.product_id }}">Add
-                            to Cart</button>
-                    </form>
-
-                    <!-- If the user is an admin, show an alert when they click "Add to Cart" -->
-                    {% if user.is_authenticated and user.role == 'Admin' %}
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const form = document.getElementById('add-to-cart-form-{{ product.product_id }}');
-                            const submitButton = form.querySelector('button[type="submit"]');
-                            submitButton.addEventListener("click", function (event) {
-                                alert("Admins cannot add products to the cart.");
-                                event.preventDefault(); // Prevent form submission
-                            });
-                        });
-                    </script>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        {% include 'product_grid_t2.html' %}
+  
     </div>
 </div>
 

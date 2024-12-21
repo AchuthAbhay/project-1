@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>{{ product.name }}'s Details</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/product_details.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="full-page">
+    <div class="product-details-container">
+        <div class="product-image">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-info">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-price">₹{{ product.selling_price }}</p>
+            <p class="product-weight"><strong>Weight:</strong> {{ product.product_weight }} kg</p>
+            <p class="product-stock {{ 'out-of-stock' if product.stock_quantity == 0 else '' }}">
+                {{ 'Out of Stock' if product.stock_quantity == 0 else 'Available Stock: ' + product.stock_quantity|string }}
+            </p>
+            <div class="product-description-container">
+                <label class="product-description-label">Product Description:</label>
+                <p class="product-description">{{ product.description }}</p>
+            </div>
+
+            {% if product.stock_quantity > 0 %}
+            <form action="{{ url_for('customer.add_to_cart', product_id=product.product_id) }}" method="POST" class="add-to-cart-form">
+                <div class="quantity-container">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" name="quantity" id="quantity" min="1" max="10" value="1" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-shopping-cart"></i> Add to Cart
+                </button>
+            </form>
+            {% endif %}
+
+            <button class="btn btn-secondary back-button" onclick="history.back()">&larr; Back</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <a href="{{ url_for('customer.product_details', product_id=product.product_id) }}" >
+        <div class="product-image">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        </div>
+        </a>
+        <div class="product-info">
+            <a href="{{ url_for('customer.product_details', product_id=product.product_id) }}">
+                <h2 class="product-name">{{ product.name }}</h2>
+            </a>
+            <p class="product-price">₹{{ product.selling_price }}</p>
+            <p class="product-weight">Weight: {{ product.product_weight }} kg</p>
+            
+            {% if product.stock_quantity > 0 %}
+            <form action="{{ url_for('customer.add_to_cart', product_id=product.product_id) }}" method="POST" id="add-to-cart-form-{{ product.product_id }}">
+                <div class="quantity-container">
+                    <label for="quantity-{{ product.product_id }}">Quantity:</label>
+                    <input type="number" name="quantity" id="quantity-{{ product.product_id }}" min="1" max="{{ product.stock_quantity }}" value="1" required>
+                </div>
+                <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+            </form>
+            {% else %}
+                <p class="product-stock-out-of-stock">Out of Stock</p>
+                <button type="button" class="add-to-cart-btn" disabled>Add to Cart</button>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endfor %}
+</div>

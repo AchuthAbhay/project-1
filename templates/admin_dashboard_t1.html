@@ -3,6 +3,10 @@
     <title>Admin Dashboard</title>
 {%endblock%}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search_filter.css') }}">
+{% endblock %}
+
 {%block content%}
 <div class="container">
     <h1>{{user.name}}'s Dashboard</h1>
@@ -19,9 +23,6 @@
                         <a class="nav-link active" href="{{ url_for('admin.add_pro') }}">Add new product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('admin.admin_summary') }}">Summary</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link active" href="{{ url_for('api.analytics') }}">Analytics</a>
                     </li>
                     <li class="nav-item">
@@ -29,14 +30,18 @@
                     </li>
                     
                 </ul>
-                <form class="d-flex" method="GET" role="search">
-                    <input class="form-control me-2" type="search" name="query" placeholder="Search products" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                </div>
+            </div>
                 
         </div>
     </nav>
+
+    <div class="search-filter-bar">
+        <form method="GET" action="{{ url_for('admin.admin_dashboard') }}" class="filter-form">
+            <input type="text" name="search" placeholder="Search by product name" value="{{ request.args.get('search', '') }}" class="search-input">
+            <button type="submit" class="filter-btn">Apply</button>
+        </form>
+    </div>
+
     {% for category in categories %}
         <div class="category-section mt-4">
             <h3>{{ category.category_name }}</h3>

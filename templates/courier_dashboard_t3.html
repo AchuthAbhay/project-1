@@ -45,7 +45,7 @@
 
         <!-- Search Bar -->
         <div class="search-container">
-            <input type="text" id="search-pending" class="search-input" placeholder="Search by customer name..." onkeyup="filterPendingOrders()">
+            <input type="text" id="search-pending" class="search-input" placeholder="Search by Order Id..." onkeyup="filterPendingOrders()">
         </div>
 
         <button class="refresh-button" onclick="refreshPendingOrders()">Refresh Orders</button>
@@ -70,8 +70,14 @@
                     <td>{{ order['order_id'] }}</td>
                     <td>{{ order['customer_name'] }}</td>
                     <td>{{ order['customer_address'] }}</td>
-                    <td>{{ order['products']  }}</td>
-                    <td>{{ order['quantity'] }}</td>
+                    <td>{% for product in order['products'] %}
+                            {{ product }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{% for count in order['quantity'] %}
+                            {{ count }}<br>
+                        {% endfor %}
+                    </td>
                     <td>{{ order['estimated_delivery'] }}</td>
                     <td class="current-status">{{ order['status'] }}</td>
                     <td>

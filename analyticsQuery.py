@@ -1,9 +1,7 @@
-from sqlalchemy import create_engine, func, extract, desc, case
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import func, extract, desc, case
 from models import OrderItem, Order, Product, Category, User
 from app import db
 from app import create_app
-from datetime import datetime, timedelta  
 
 # Function to Retrieve the total profit
 def get_total_profit(session):

@@ -7,19 +7,19 @@
             <form method="POST">
                 <div class="mb-3">
                     <label for="recipient_name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="recipient_name" name="recipient_name" required>
+                    <input type="text" class="form-control" id="recipient_name" name="recipient_name" value="{{ user.name }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="phone_no" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="phone_no" name="phone_no" required>
+                    <input type="text" class="form-control" id="phone_no" name="phone_no" value="{{ user.phone_number }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                    <textarea class="form-control" id="address" name="address" rows="3" required>{{ user.address }}</textarea>
                 </div>
                 <div class="mb-3">
                     <label for="pin" class="form-label">PIN Code</label>
-                    <input type="text" class="form-control" id="pin" name="pin" required>
+                    <input type="text" class="form-control" id="pin" name="pin" value="{{ user.pincode }}" required>
                 </div>
                 <button type="submit" class="btn btn-dark">Submit</button>
             </form>
