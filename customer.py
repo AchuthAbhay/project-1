@@ -218,12 +218,16 @@ def cust_profile():
     if request.method == 'POST':
         recipient_name = request.form.get('recipient_name')
         address = request.form.get('address')
+        region = request.form.get('region')
+        country = request.form.get('country')
         pin = request.form.get('pin')
         phone_no = request.form.get('phone_no')
 
         current_user.name = recipient_name
         current_user.phone_number = phone_no
         current_user.address = address
+        current_user.region = region
+        current_user.country = country
         current_user.pincode = pin
         db.session.commit()
 

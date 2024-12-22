@@ -18,6 +18,19 @@
                     <textarea class="form-control" id="address" name="address" rows="3" required>{{ user.address }}</textarea>
                 </div>
                 <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" class="form-control" id="country" name="country" value="{{ user.country }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="region" class="form-label">Region</label>
+                    <select name="region" id="region" class="form-control">
+                        <option value="East" {% if user.region == 'East' %}selected{% endif %}>East</option>
+                        <option value="West" {% if user.region == 'West' %}selected{% endif %}>West</option>
+                        <option value="North" {% if user.region == 'North' %}selected{% endif %}>North</option>
+                        <option value="South" {% if user.region == 'South' %}selected{% endif %}>South</option>
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label for="pin" class="form-label">PIN Code</label>
                     <input type="text" class="form-control" id="pin" name="pin" value="{{ user.pincode }}" required>
                 </div>

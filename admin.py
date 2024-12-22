@@ -93,7 +93,7 @@ def edit_product():
         product.description = request.form.get('description')
         product.cost_price = request.form.get('cost_price')
         product.selling_price = request.form.get('selling_price')
-        product.quantity = request.form.get('quantity')
+        product.stock_quantity = request.form.get('quantity')
         product.category_id = request.form.get('category')
         product.product_weight = request.form.get('weight')
 
