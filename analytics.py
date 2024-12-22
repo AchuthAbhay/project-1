@@ -185,10 +185,14 @@ def api_get_sales_for_filtered_season():
         
         try:
             data = get_sales_for_filtered_season(session, season)
-            return jsonify([{
+            response = jsonify([{
                 "product_name": row[0],
                 "total_sales": row[1]
             } for row in data])
+            if len(data):
+                return response
+            else:
+                return jsonify([{"product_name": "null", "total_sales":0}])
         except Exception as e:
             current_app.logger.error(f"Error in sales_for_filtered_season: {e}")
             return jsonify({"error": "Failed to fetch sales for the given season"}), 500

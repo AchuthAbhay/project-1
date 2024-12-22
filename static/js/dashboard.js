@@ -226,7 +226,7 @@ function usersLocation(location) {
         .then(response => response.json())
         .then(data => {
             let labels = data.map(item => item.location);
-            let values = data.map(item => item.User_count);
+            let values = data.map(item => item.user_count);
             // Generate a unique color for each bar
             let colors = values.map(() => getRandomColor(values.length));
 
@@ -267,7 +267,7 @@ function trendingProducts(season) {
     fetch(`/api/sales/season?season=${season}`)
         .then(response => response.json())
         .then(data => {
-            let labels = data.map(item => item.Product_name);
+            let labels = data.map(item => item.product_name);
             let values = data.map(item => item.total_sales);
             // Generate a unique color for each bar
             let colors = values.map(() => getRandomColor(values.length));
@@ -327,9 +327,9 @@ function repeatCustomers() {
     fetch('/api/monthly_customer_counts')
         .then(response => response.json())
         .then(data => {
-            let labels = data.map(item => item.Month);
-            let values1 = data.map(item => item.New_Customers);
-            let values2 = data.map(item => item.Old_Customers);
+            let labels = data.map(item => item.month);
+            let values1 = data.map(item => item.new_customers);
+            let values2 = data.map(item => item.old_Customers);
             console.log(values2);
             new Chart("repeat", {
                 type: "line", 

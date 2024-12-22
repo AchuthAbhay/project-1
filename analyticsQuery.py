@@ -191,17 +191,21 @@ def get_monthly_customer_counts(session):
         session.query(
             func.strftime('%Y-%m', Order.created_at).label('month'),  # Extract year-month from order date
             func.count(
-                case(
-                    (func.strftime('%Y-%m', User.created_at) == func.strftime('%Y-%m', Order.created_at), User.user_id),
-                    else_=None,
+                func.distinct(
+                    case(
+                        # New customers: User created in the same month as the order
+                        (func.strftime('%Y-%m', User.created_at) == func.strftime('%Y-%m', Order.created_at), User.user_id)
+                    )
                 )
-            ).label('new_customer_Count'),
+            ).label('new_customer_count'),
             func.count(
-                case(
-                    (func.strftime('%Y-%m', User.created_at) < func.strftime('%Y-%m', Order.created_at), User.user_id),
-                    else_=None,
+                func.distinct(
+                    case(
+                        # Old customers: User created before the order's month
+                        (func.strftime('%Y-%m', User.created_at) < func.strftime('%Y-%m', Order.created_at), User.user_id)
+                    )
                 )
-            ).label('old_customer_Count'),
+            ).label('old_customer_count'),
         )
         .join(User, User.user_id == Order.user_id)  # Join User and Order tables
         .group_by(func.strftime('%Y-%m', Order.created_at))  # Group by year-month
@@ -266,9 +270,15 @@ if __name__ == "__main__":
         top_performing_products = get_top_performing_products(session, limit=5)
         for product, total_sold in top_performing_products:
             print(f"Product: {product}, Total Quantity Sold: {total_sold}")
+            
+        customer_count_by_location = get_customer_count_by_location(session)
+        print("\ncustomer count by location")
+        for location, user_count  in customer_count_by_location:
+            print(f"Location: {location}, User_count: {user_count}")
 
         print("\nSales for Filtered Season")
-        for product, total_sales in get_sales_for_filtered_season(session, 'all'):
+        print(get_sales_for_filtered_season(session, 'summer'))
+        for product, total_sales in get_sales_for_filtered_season(session, 'summer'):
             print(f"Product: {product}, Total_sales: {total_sales}")
 
         repeat_customer_rate = get_repeat_customer_rate(session)
