@@ -53,7 +53,7 @@
             {% endfor %}
         </select>
 
-        <select name="sort" class="sort-dropdown">
+        <select name="sort_by" id="sort_by" class="sort-dropdown">
             <option value="name" {% if request.args.get('sort') == 'name' %}selected{% endif %}>Sort by Name</option>
             <option value="price" {% if request.args.get('sort') == 'price' %}selected{% endif %}>Sort by Price</option>
             <option value="weight" {% if request.args.get('sort') == 'weight' %}selected{% endif %}>Sort by Weight</option>

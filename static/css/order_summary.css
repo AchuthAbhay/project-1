@@ -1,29 +1,57 @@
-.wrapper-order-container{
+/* General page styling */
+.wrapper-order-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 170px);
+    padding: 20px;
+    background-color: #f8f8f8;
+    /* navbar height + footer height = 127 */
+    min-height: calc(100vh - 127px); 
 }
 
+/* Order container */
 .order-container {
     width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
-.order-details {
+.order-container:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Order header details */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
 }
 
-.order-details p {
+.order-info p,
+.total-summary p {
     font-size: 16px;
     margin: 5px 0;
+    color: #444;
 }
 
+.order-info p strong,
+.total-summary p strong {
+    color: #333;
+    font-weight: bold;
+}
+
+.total-summary {
+    text-align: right;
+}
+
+/* Table styling */
 .order-items {
     width: 100%;
     border-collapse: collapse;
@@ -32,27 +60,94 @@
 
 .order-items th,
 .order-items td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    padding: 12px 15px;
+    border: 1px solid #eaeaea;
     text-align: center;
+    font-size: 14px;
+    color: #555;
 }
 
 .order-items th {
-    background-color: #f4f4f4;
+    background-color: #f5f5f5;
     font-weight: bold;
+    color: #333;
 }
 
+.product-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+/* Buttons styling */
 .btn {
+    display: inline-block;
     margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #90a874;
+    padding: 12px 20px;
+    font-size: 15px;
+    background-color: #5cb85c;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .btn:hover {
-    background-color: #688d57;
-    color: white;
+    background-color: #4cae4c;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .total-summary {
+        text-align: left;
+        margin-top: 15px;
+    }
+
+    .order-info p,
+    .total-summary p {
+        font-size: 14px;
+    }
+
+    .order-items th,
+    .order-items td {
+        font-size: 12px;
+    }
+
+    .product-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-info p,
+    .total-summary p {
+        font-size: 12px;
+    }
+
+    .order-items th,
+    .order-items td {
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
 }

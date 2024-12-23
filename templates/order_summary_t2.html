@@ -40,37 +40,52 @@
 </nav>
 
 <div class="wrapper-order-container">
-<div class="order-container">
-    <h1>Order Summary</h1>
-    <div class="order-details">
-        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
-        <p><strong>Order Date:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-        <p><strong>Status:</strong> {{ order.status }}</p>
-        <p><strong>Total Price:</strong> ₹{{ "%.2f" | format(order.total_price) }}</p>
+    <div class="order-container">
+        <h1>Order Details</h1>
+        
+        <div class="order-header">
+            <div class="order-info">
+                <p><strong>Order ID:</strong> #00{{ order.order_id }}</p>
+                <p><strong>Order Date:</strong> {{ order.created_at.strftime('%d-%m-%Y %H:%M:%S') }}</p>
+                <p><strong>Status:</strong> {{ order.status }}</p>
+                <p><strong>Estimated Delivery:</strong> {{ order.estimated_delivery.strftime('%d-%m-%Y') }}</p>
+            </div>
+            <div class="total-summary">
+                <p><strong>Shipping Cost:</strong> ₹{{ "%.2f" | format(order.shipping_cost) }}</p>
+                <p><strong>Total Price (Including Shipping):</strong> ₹{{ "%.2f" | format(order.total_price + order.shipping_cost) }}</p>
+            </div>
+        </div>
+
+        <table class="order-items">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Image</th>
+                    <th>Weight (kg)</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.order_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td><img src="{{ item.product.image_url }}" alt="{{ item.product.name }}" class="product-image"></td>
+                    <td>{{ item.product.product_weight }}</td>
+                    <td>₹{{ "%.2f" | format(item.product.selling_price) }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ "%.2f" | format(item.quantity * item.product.selling_price) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('customer.show_products') }}" class="btn">Continue Shopping</a>
     </div>
-
-    <table class="order-items">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in order.order_items %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td>₹{{ "%.2f" | format(item.product.selling_price) }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>₹{{ "%.2f" | format(item.quantity * item.product.selling_price) }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ url_for('customer.show_products') }}" class="btn">Continue Shopping</a>
 </div>
-</div>
+<script src="{{ url_for('static', filename='js/styles.js') }}"></script>
+<script>
+  const flashed_messages = get_flashed_messages(with_categories=true) | tojson | safe;
+</script>
 {% endblock %}
