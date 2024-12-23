@@ -1,4 +1,4 @@
 __pycache__/
 venv/
 .env
-.pytest_cache/
+.pytest_cache/project-1/
