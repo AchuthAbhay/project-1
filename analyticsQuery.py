@@ -75,7 +75,7 @@ def get_customer_count_by_region(session, region_filter=None):
 def get_total_sales(session):
     total_sales = session.query(
         func.sum(OrderItem.quantity * Product.selling_price).label("total_sales")
-    ).join(Product, OrderItem.product_id == Product.id).scalar()
+    ).join(Product, OrderItem.product_id == Product.product_id).scalar()
     return total_sales
 
 # Function to get total sales by category
