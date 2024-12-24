@@ -21,7 +21,7 @@ def courier_dashboard():
         'customer_name': User.query.get(order.user_id).name,
         'customer_address': order.address+', '+str(order.pincode),
         'customer_phone': User.query.get(order.user_id).phone_number,
-        'products': [item.product.name for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()],
+        'products': [item.product.name if item.product else 'Unknown Product' for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()],
         'quantity': [str(item.quantity) for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()],
         'status': order.status,
         'estimated_delivery':order.estimated_delivery.strftime('%Y-%m-%d %H:%M:%S'),
@@ -133,7 +133,7 @@ def courier_summary():
         'customer_name': order.user.name,
         'customer_address': order.address+', '+str(order.pincode),
         'customer_phone': order.user.phone_number,
-        'products': '\n'.join([item.product.name for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()]),
+        'products': '\n'.join([item.product.name if item.product else 'Unknown Product' for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()]),
         'quantity': '\n'.join([str(item.quantity) for item in OrderItem.query.filter(OrderItem.order_id==order.order_id).all()]),
         'delivered_at':order.actual_delivery.strftime('%Y-%m-%d %H:%M:%S'),
     } for order in orders]

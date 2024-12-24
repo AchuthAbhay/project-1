@@ -30,17 +30,23 @@
                     </li>
                     
                 </ul>
+                <form method="GET" action="{{ url_for('admin.admin_dashboard') }}" class="d-flex">
+                    <input 
+                      class="form-control me-2" 
+                      type="text" 
+                      name="search" 
+                      placeholder="Search by product name" 
+                      value="{{ request.args.get('search', '') }}" 
+                      aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Apply</button>
+                  </form>
             </div>
                 
         </div>
+        
     </nav>
 
-    <div class="search-filter-bar">
-        <form method="GET" action="{{ url_for('admin.admin_dashboard') }}" class="filter-form">
-            <input type="text" name="search" placeholder="Search by product name" value="{{ request.args.get('search', '') }}" class="search-input">
-            <button type="submit" class="filter-btn">Apply</button>
-        </form>
-    </div>
+    
 
     {% for category in categories %}
         <div class="category-section mt-4">
