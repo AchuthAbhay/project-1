@@ -36,11 +36,37 @@
 
 
             </ul>
+            <form method="GET" action="{{ url_for('customer.show_products') }}" class="d-flex align-items-center ms-auto">
+                <input 
+                    type="text" 
+                    name="search" 
+                    placeholder="Search by product name" 
+                    value="{{ request.args.get('search', '') }}" 
+                    class="form-control-sm"
+                >
+    
+                <select name="category" class="form-select-sm me-2">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category[0] }}" {% if request.args.get('category') == category[0] %}selected{% endif %}>
+                        {{ category[0] }}
+                    </option>
+                    {% endfor %}
+                </select>
+    
+                <select name="sort_by" id="sort_by" class="form-select-sm me-2">
+                    <option value="name" {% if request.args.get('sort') == 'name' %}selected{% endif %}>Sort by Name</option>
+                    <option value="price" {% if request.args.get('sort') == 'price' %}selected{% endif %}>Sort by Price</option>
+                    <option value="weight" {% if request.args.get('sort') == 'weight' %}selected{% endif %}>Sort by Weight</option>
+                </select>
+    
+                <button type="submit" class="btn btn-outline-success">Apply</button>
+            </form>
         </div>
     </div>
 </nav>
 
-<div class="search-filter-bar">
+<!--<div class="search-filter-bar">
     <form method="GET" action="{{ url_for('customer.show_products') }}" class="filter-form">
         <input type="text" name="search" placeholder="Search by product name" value="{{ request.args.get('search', '') }}" class="search-input">
         
@@ -61,7 +87,7 @@
 
         <button type="submit" class="filter-btn">Apply</button>
     </form>
-</div>
+</div>-->
 
 <div class="product-wrapper">
     <div class="product-page">
