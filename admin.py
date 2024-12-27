@@ -55,7 +55,7 @@ def add_pro():
             image_path = os.path.join('static/uploads', image_file.filename)
             image_file.save(image_path)
             print(image_path)
-            image_url = image_path
+            image_url = '/'+image_path
             print(image_url)
         else:
             flash('Error while uploading image','error')
@@ -105,7 +105,7 @@ def edit_product():
             if image_file.filename != '':
                 image_path = os.path.join('static/uploads', image_file.filename)
                 image_file.save(image_path)
-                product.image_url = image_path
+                product.image_url = '/'+image_path
 
         db.session.commit()
         return redirect(url_for('admin.admin_dashboard'))
